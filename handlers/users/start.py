@@ -3,6 +3,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from loader import dp, db
 import requests
 import os
+from aiogram.types.web_app_info import WebAppInfo
 
 
 def send_registration_event(user_id, username, first_name, last_name):
@@ -32,7 +33,7 @@ def send_registration_event(user_id, username, first_name, last_name):
 async def start(message: types.Message):
     first_name = message.from_user.first_name
     button = InlineKeyboardMarkup()
-    mini_button = InlineKeyboardButton('Открыть web app страницу', callback_data='button')
+    mini_button = InlineKeyboardButton('Открыть web app страницу', web_app=WebAppInfo(url='https://www.youtube.com/'))
     button.add(mini_button)
     if message.text == '/menu':
         await message.reply(f"Привет {first_name}!", reply_markup=button)
