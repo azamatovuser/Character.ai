@@ -1,10 +1,11 @@
+import os
 import openai
 
-openai.api_key = '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'
+openai.api_key = os.environ.get('OPENAI_KEY')
 openai.Model.list()
 
 response = openai.Completion.create(
-    model='davinci',
+    model='text-davinci-003',
     prompt='hello',
 )
 print(response['choices'][0]['text'])

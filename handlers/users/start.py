@@ -23,9 +23,9 @@ def send_registration_event(user_id, username, first_name, last_name):
     }
     response = requests.post('https://api.amplitude.com/2/httpapi', json=payload)
     if response.status_code == 200:
-        print('Event sent successfully to Amplitude')
+        print('Event sign up sent successfully to Amplitude')
     else:
-        print('Failed to send event to Amplitude')
+        print('Failed sign up to send event to Amplitude')
     print(response.content)
 
 
@@ -33,7 +33,7 @@ def send_registration_event(user_id, username, first_name, last_name):
 async def start(message: types.Message):
     first_name = message.from_user.first_name
     button = InlineKeyboardMarkup()
-    mini_button = InlineKeyboardButton('Открыть web app страницу', web_app=WebAppInfo(url='https://www.youtube.com/'))
+    mini_button = InlineKeyboardButton('Открыть web app страницу', web_app=WebAppInfo(url='https://azamatovuser.github.io/Web-App-Character.ai/'))
     button.add(mini_button)
     if message.text == '/menu':
         await message.reply(f"Привет {first_name}!", reply_markup=button)
