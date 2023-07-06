@@ -24,17 +24,18 @@ class Database:
             CREATE TABLE IF NOT EXISTS user_question (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INTEGER,
-                question TEXT
+                question TEXT,
+                answer TEXT
             )
         ''')
         self.conn.commit()
 
         # Создание таблицы answer, если она не существует
         self.cursor.execute('''
-            CREATE TABLE IF NOT EXISTS answer (
+            CREATE TABLE IF NOT EXISTS character (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INTEGER,
-                answer TEXT
+                character TEXT
             )
         ''')
         self.conn.commit()
@@ -47,20 +48,21 @@ class Database:
         ''', (user_id, username, first_name, last_name))
         self.conn.commit()
 
-    def insert_user_question(self, user_id, question):
+    def insert_user_question_answer(self, user_id, question, answer):
         # Вставка данных в таблицу user_question
         self.cursor.execute('''
-            INSERT INTO user_question (user_id, question)
-            VALUES (?, ?)
-        ''', (user_id, question))
+            INSERT INTO user_question (user_id, question, answer)
+            VALUES (?, ?, ?)
+        ''', (user_id, question, answer))
         self.conn.commit()
 
-    def insert_answer(self, user_id, answer):
+
+    def insert_character(self, user_id, character):
         # Вставка данных в таблицу answer
         self.cursor.execute('''
-            INSERT INTO answer (user_id, answer)
+            INSERT INTO answer (user_id, character)
             VALUES (?, ?)
-        ''', (user_id, answer))
+        ''', (user_id, character))
         self.conn.commit()
 
     def close_connection(self):
