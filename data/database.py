@@ -33,6 +33,7 @@ class Database:
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS answer (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER,
                 answer TEXT
             )
         ''')
@@ -54,12 +55,12 @@ class Database:
         ''', (user_id, question))
         self.conn.commit()
 
-    def insert_answer(self, answer):
+    def insert_answer(self, user_id, answer):
         # Вставка данных в таблицу answer
         self.cursor.execute('''
-            INSERT INTO answer (answer)
-            VALUES (?)
-        ''', (answer,))
+            INSERT INTO answer (user_id, answer)
+            VALUES (?, ?)
+        ''', (user_id, answer))
         self.conn.commit()
 
     def close_connection(self):
