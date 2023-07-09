@@ -94,8 +94,9 @@ def send_answers_event(user_id, answers):
     print(response.content)
 
 
-@dp.message_handler(content_types=['web_app_data'])
+@dp.message_handler(text=['mario', 'albert'])
 async def conversation(message: types.Message):
+    print(111111111111111)
     user_id = message.from_user.id
     character = message.web_app_data.data
     db.insert_character(user_id, character)
