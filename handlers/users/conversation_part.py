@@ -94,11 +94,13 @@ def send_answers_event(user_id, answers):
     print(response.content)
 
 
-@dp.message_handler(text=['mario', 'albert'])
-async def conversation(message: types.Message):
-    print(111111111111111)
+# Handle bot messages
+@dp.message_handler(content_types=types.ContentType.TEXT)
+async def handle_text(message: types.Message, state: FSMContext):
+    if message.text.lower() and message.from_user.is_bot == "mario":
+        await message.answer("Data received!")
     user_id = message.from_user.id
-    character = message.web_app_data.data
+    character = message.text
     db.insert_character(user_id, character)
     send_character_event(user_id, character)
     if character == 'mario':
