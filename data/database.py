@@ -60,7 +60,7 @@ class Database:
     def insert_character(self, user_id, character):
         # Вставка данных в таблицу answer
         self.cursor.execute('''
-            INSERT INTO answer (user_id, character)
+            INSERT INTO character (user_id, character)
             VALUES (?, ?)
         ''', (user_id, character))
         self.conn.commit()

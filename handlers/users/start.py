@@ -1,6 +1,6 @@
 from aiogram import types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from loader import dp, db
+from loader import dp, db, storage
 import requests
 import os
 from aiogram.types.web_app_info import WebAppInfo
