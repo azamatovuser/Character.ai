@@ -110,14 +110,18 @@ def send_answers_event(user_id, answers):
 #         await message.answer(f"Привет я Энштейн, что вы хотите от меня?")
 
 
-@dp.message_handler(text=['mario game character', 'albert einstein'])
+@dp.message_handler(text=['марио начинай', 'энштейн начинай'])
 async def mario(message: types.Message):
     user_id = message.from_user.id
-    character = message.text
-    character_check[0] = message.text
+    if message.text == 'марио начинай':
+        character = 'Mario'
+        character_check[0] = 'Mario'
+    else:
+        character = 'Albert Einshtein'
+        character_check[0] = 'Albert Einshtein'
     send_character_event(user_id, character)
     db.insert_character(user_id, character)
-    if character == 'mario game character':
+    if character == 'Mario':
         await message.answer('Я игровой персонаж марио, ведь я же буду интересен вам, да ведь?')
     else:
         await message.answer('Алберт Энштейн, один из великих умов. Не всем же везет иметь такую беседу, верно?')
@@ -135,7 +139,7 @@ async def message_from_user(message: types.Message):
         response = openai.Completion.create(
             model='text-davinci-003',
             prompt=f"Bro you are {character_check[0]} and don't send dangerous information "
-                   f"and you need to answer to this question - {question}. Also and don't begin conversation with ?",
+                   f"and you need to answer to this question - {question}. Also and don't begin conversation with ? or , or .",
             max_tokens=1000,
         )
         # if response.status_code == '200':
