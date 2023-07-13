@@ -1,13 +1,12 @@
 import sqlite3
 
-
 class Database:
     def __init__(self, db_name):
-        # Создание подключения к базе данных SQLite
+        # Create a connection to the SQLite database
         self.conn = sqlite3.connect(db_name)
         self.cursor = self.conn.cursor()
 
-        # Создание таблицы users, если она не существует
+        # Create the 'users' table if it doesn't exist
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 user_id INTEGER PRIMARY KEY UNIQUE,
@@ -19,7 +18,7 @@ class Database:
         ''')
         self.conn.commit()
 
-        # Создание таблицы user_question, если она не существует
+        # Create the 'user_question' table if it doesn't exist
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS user_question (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,9 +29,9 @@ class Database:
         ''')
         self.conn.commit()
 
-        # Создание таблицы answer, если она не существует
+        # Create the 'character' table if it doesn't exist
         self.cursor.execute('''
-            CREATE TABLE IF NOT EXISTS character (
+            CREATE TABLE IF NOT EXISTS "character" (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INTEGER,
                 character TEXT
@@ -41,7 +40,7 @@ class Database:
         self.conn.commit()
 
     def insert_user(self, user_id, username, first_name, last_name):
-        # Вставка данных в таблицу users
+        # Insert data into the 'users' table
         self.cursor.execute('''
             INSERT OR IGNORE INTO users (user_id, username, first_name, last_name, created_date)
             VALUES (?, ?, ?, ?, datetime('now'))
@@ -49,23 +48,22 @@ class Database:
         self.conn.commit()
 
     def insert_user_question_answer(self, user_id, question, answer):
-        # Вставка данных в таблицу user_question
+        # Insert data into the 'user_question' table
         self.cursor.execute('''
             INSERT INTO user_question (user_id, question, answer)
             VALUES (?, ?, ?)
         ''', (user_id, question, answer))
         self.conn.commit()
 
-
     def insert_character(self, user_id, character):
-        # Вставка данных в таблицу answer
+        # Insert data into the 'character' table
         self.cursor.execute('''
-            INSERT INTO character (user_id, character)
+            INSERT INTO "character" (user_id, character)
             VALUES (?, ?)
         ''', (user_id, character))
         self.conn.commit()
 
     def close_connection(self):
-        # Закрытие подключения к базе данных
+        # Close the database connection
         self.cursor.close()
         self.conn.close()
